@@ -10,23 +10,25 @@ namespace KenoGenerator
 {
     public class KenoGenerator
     {
-        public int[][] szelvenyek { get; }
+        public int[][] Szelvenyek { get; }
         public int MegjatszottSzamokSzama { get; private set; }
         private int NumberOfDuplicates { get; set; } = 0;
 
         public KenoGenerator(int szelvenyekSzama, int megjatszottSzamokSzama)
         {
-            szelvenyek = new int[szelvenyekSzama][];
+            Szelvenyek = new int[szelvenyekSzama][];
             MegjatszottSzamokSzama = megjatszottSzamokSzama;
+
+   
         }
 
         public int[][] GenerateSzelvenyek()
         {
-            for (int i = 0; i < szelvenyek.Length; i++)
+            for (int i = 0; i < Szelvenyek.Length; i++)
             {
-                szelvenyek[i] = GenerateSzelveny();
+                Szelvenyek[i] = GenerateSzelveny();
             }           
-            return szelvenyek;
+            return Szelvenyek;
         }
 
         private int[] GenerateSzelveny()
@@ -56,7 +58,7 @@ namespace KenoGenerator
         {
             int sorszam = 0;
 
-            foreach (var szelveny in szelvenyek)
+            foreach (var szelveny in Szelvenyek)
             {
                 sorszam++;
                 Console.WriteLine();
@@ -78,11 +80,11 @@ namespace KenoGenerator
         {
             bool isThereEqualArraysExist;
 
-            for (int i = 0; i < szelvenyek.Length; i++)
+            for (int i = 0; i < Szelvenyek.Length; i++)
             {
-                for (int j = i+1; j < szelvenyek.Length; j++)
+                for (int j = i+1; j < Szelvenyek.Length; j++)
                 {
-                    isThereEqualArraysExist = szelvenyek[i].SequenceEqual(szelvenyek[j]);
+                    isThereEqualArraysExist = Szelvenyek[i].SequenceEqual(Szelvenyek[j]);
 
                     if (isThereEqualArraysExist)
                     {

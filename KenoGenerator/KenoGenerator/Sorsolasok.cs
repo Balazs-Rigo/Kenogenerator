@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace KenoGenerator
 {
-    public class Sorsolasok
+    public static class Sorsolasok
     {
-        public int[][] ReadAllSorsolas()
+        public static Dictionary<DateTime, int[]> ReadAllSorsolas()
         {
             var filePath = @"Sorsolasok\keno.csv";
-            int[][] sorsolasok = new int[1][];
+            Dictionary<DateTime, int[]> sorsolasok = new Dictionary<DateTime, int[]>();
             int sorsolasokSzama = 0;
 
             var lines = File.ReadAllLines(filePath).Select(a => a.Split(';'));
@@ -23,9 +23,11 @@ namespace KenoGenerator
 
             foreach (var sorsol in sorsolasokFromFile)
             {
-                sorsolasok[sorsolasokSzama] = sorsol.Skip(4).Select(x=> int.Parse(x)).ToArray();
+                sorsolasok.Add(DateTime.Parse(sorsol.Skip(3).Take(1).FirstOrDefault()), 
+                    sorsol.Skip(4).Select(x => int.Parse(x)).ToArray());
+
                 sorsolasokSzama++;
-                if (sorsolasokSzama == 1)
+                if (sorsolasokSzama == 30)
                     break;
             }
             return sorsolasok;
