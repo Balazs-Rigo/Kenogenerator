@@ -10,7 +10,7 @@ namespace KenoGenerator
 {
     public static class Sorsolasok
     {
-        public static Dictionary<DateTime, int[]> ReadAllSorsolas()
+        public static Dictionary<DateTime, int[]> ReadSorsolas(int numberOfDays)
         {
             var filePath = @"Sorsolasok\keno.csv";
             Dictionary<DateTime, int[]> sorsolasok = new Dictionary<DateTime, int[]>();
@@ -27,7 +27,7 @@ namespace KenoGenerator
                     sorsol.Skip(4).Select(x => int.Parse(x)).ToArray());
 
                 sorsolasokSzama++;
-                if (sorsolasokSzama == 30)
+                if (sorsolasokSzama == numberOfDays)
                     break;
             }
             return sorsolasok;
