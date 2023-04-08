@@ -30,11 +30,11 @@
 
             ////var intersect = szamok2.Intersect(szamok1).Count();
             ///
-            KenoTicketChecker kenoTicketChecker= new KenoTicketChecker();
+            KenoTicketChecker kenoTicketChecker= new KenoTicketChecker(new DateTime(2022,02,03), new DateTime(2022,05,01));
 
-            int[] numbers = new int[] { 36,52,54,61};
+            int[] numbers = new int[] { 3, 6, 8, 21, 22,26,27} ;
 
-            var isWinner = kenoTicketChecker.IsAWinnerTicket(numbers, new DateTime(2022, 7, 20), new DateTime(2022,8,20));
+            var isWinner = kenoTicketChecker.IsAWinnerTicket(numbers);
 
             Console.WriteLine("Is winner?: " + isWinner); 
 

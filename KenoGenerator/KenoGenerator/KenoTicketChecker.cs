@@ -8,29 +8,48 @@ using System.Threading.Tasks;
 namespace KenoGenerator
 {
     public class KenoTicketChecker
-    {   
-        public bool IsAWinnerTicket(int[] numbers, DateTime date)
-        {
-            Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(500);
+    {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; } = DateTime.Today;
+        public int NumberOfDays { get; set; }
 
-            if (numbers.Intersect(sorsolasok[date]).Count() == numbers.Length)
-                return true;
+        public KenoTicketChecker()
+        {
+            StartDate = DateTime.Today;
+        }
+
+        public KenoTicketChecker(DateTime startDate, DateTime endDate)
+        {
+            StartDate = startDate;
+            EndDate = endDate;
+        }
+
+        public bool IsAWinnerTicket(int[] numbers)
+        {
+            var totalDays = (EndDate - StartDate).TotalDays;
+
+            Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(StartDate,EndDate);
+
+            //if (numbers.Intersect(sorsolasok[date]).Count() == numbers.Length)
+            //    return true;
 
             return false;
         }
 
-        public bool IsAWinnerTicket(int[] numbers, DateTime startDate, DateTime endDate)
+        public bool IsAWinnerTicket(int[] numbers, DateTime startDate)
         {
-            Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(300);
+            var totalDays = (EndDate - StartDate).TotalDays;
+            
+            Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(StartDate, EndDate);
 
-            do
-            {
-                if (numbers.Intersect(sorsolasok[startDate]).Count() == numbers.Length)
-                    return true;
+            //do
+            //{
+            //    if (numbers.Intersect(sorsolasok[startDate]).Count() == numbers.Length)
+            //        return true;
 
-                startDate =  startDate.AddDays(1);
+            //    startDate =  startDate.AddDays(1);
 
-            } while (startDate <= endDate);   
+            //} while (startDate <= endDate);   
 
             return false;
         }

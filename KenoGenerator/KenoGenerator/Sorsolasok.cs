@@ -10,8 +10,10 @@ namespace KenoGenerator
 {
     public static class Sorsolasok
     {
-        public static Dictionary<DateTime, int[]> ReadSorsolas(int numberOfDays)
+        public static Dictionary<DateTime, int[]> ReadSorsolas(DateTime startDate, DateTime endDate)
         {
+            //var numberOfDays = (int)(endDate - startDate).TotalDays;
+            var numberOfDays = 8000;
             var filePath = @"Sorsolasok\keno.csv";
             Dictionary<DateTime, int[]> sorsolasok = new Dictionary<DateTime, int[]>();
             int sorsolasokSzama = 0;
@@ -26,11 +28,10 @@ namespace KenoGenerator
                 sorsolasok.Add(DateTime.Parse(sorsol.Skip(3).Take(1).FirstOrDefault()), 
                     sorsol.Skip(4).Select(x => int.Parse(x)).ToArray());
 
-                sorsolasokSzama++;
-                if (sorsolasokSzama == numberOfDays)
+                if (sorsolasok.Count == numberOfDays)
                     break;
             }
-            return sorsolasok;
+            return sorsolasok.Where(x => x.Key >= startDate && x.Key <= endDate).ToDictionary(x=> x.Key,x=>x.Value);
         }
     }
 }
