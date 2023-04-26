@@ -9,49 +9,57 @@ namespace KenoGenerator
 {
     public class KenoTicketChecker
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; } = DateTime.Today;
-        public int NumberOfDays { get; set; }
-
-        public KenoTicketChecker()
+        private readonly ISorsolasok _sorsolasok;
+        public KenoTicketChecker(ISorsolasok sorsolasok)
         {
-            StartDate = DateTime.Today;
+            _sorsolasok = sorsolasok;
         }
 
-        public KenoTicketChecker(DateTime startDate, DateTime endDate)
+        //[Obsolete]
+        //public bool IsAWinnerTicket(int[] numbers)
+        //{
+        //    var totalDays = (EndDate - StartDate).TotalDays;
+
+        //    Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(StartDate,EndDate);
+
+        //    if (numbers.Intersect(sorsolasok[StartDate]).Count() == numbers.Length)
+        //        return true;
+
+        //    return false;
+        //}
+
+        public bool IsAWinnerTicket(int[] numbers, DateTime startDate, DateTime endDate)
         {
-            StartDate = startDate;
-            EndDate = endDate;
-        }
-
-        public bool IsAWinnerTicket(int[] numbers)
-        {
-            var totalDays = (EndDate - StartDate).TotalDays;
-
-            Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(StartDate,EndDate);
-
-            //if (numbers.Intersect(sorsolasok[date]).Count() == numbers.Length)
-            //    return true;
-
-            return false;
-        }
-
-        public bool IsAWinnerTicket(int[] numbers, DateTime startDate)
-        {
-            var totalDays = (EndDate - StartDate).TotalDays;
+            var totalDays = (endDate - startDate).TotalDays;
             
-            Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(StartDate, EndDate);
+            Dictionary<DateTime, int[]> sorsolasok = _sorsolasok.ReadSorsolas(startDate, endDate);
 
-            //do
-            //{
-            //    if (numbers.Intersect(sorsolasok[startDate]).Count() == numbers.Length)
-            //        return true;
+            do
+            {
+                try
+                {
+                    if (numbers.Intersect(sorsolasok[startDate]).Count() == numbers.Length)
+                        return true;
+                }
+                catch (KeyNotFoundException)
+                {
 
-            //    startDate =  startDate.AddDays(1);
+                }
 
-            //} while (startDate <= endDate);   
+                startDate = startDate.AddDays(1);
+
+            } while (startDate <= endDate);
 
             return false;
         }
+
+        //public int HalfOfItBelow30()
+        //{
+        //    Dictionary<DateTime, int[]> sorsolasok = Sorsolasok.ReadSorsolas(StartDate, EndDate);
+
+        //    var numbersOfBelow30 = sorsolasok.Where(x => x.Value.ElementAt(9) < 30);
+
+        //    return numbersOfBelow30.Count();
+        //}
     }
 }

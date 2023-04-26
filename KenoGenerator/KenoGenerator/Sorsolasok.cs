@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace KenoGenerator
 {
-    public static class Sorsolasok
+    public class Sorsolasok : ISorsolasok
     {
-        public static Dictionary<DateTime, int[]> ReadSorsolas(DateTime startDate, DateTime endDate)
+        public Dictionary<DateTime, int[]> ReadSorsolas(DateTime startDate, DateTime endDate)
         {
             //var numberOfDays = (int)(endDate - startDate).TotalDays;
             var numberOfDays = 8000;
@@ -25,10 +25,17 @@ namespace KenoGenerator
 
             foreach (var sorsol in sorsolasokFromFile)
             {
-                sorsolasok.Add(DateTime.Parse(sorsol.Skip(3).Take(1).FirstOrDefault()), 
+                try
+                {
+                    sorsolasok.Add(DateTime.Parse(sorsol.Skip(3).Take(1).FirstOrDefault()),
                     sorsol.Skip(4).Select(x => int.Parse(x)).ToArray());
+                }
+                catch (Exception)
+                {
 
-                if (sorsolasok.Count == numberOfDays)
+                }                
+
+                if (sorsolasok.Keys.Min() == startDate)
                     break;
             }
             return sorsolasok.Where(x => x.Key >= startDate && x.Key <= endDate).ToDictionary(x=> x.Key,x=>x.Value);

@@ -30,13 +30,17 @@
 
             ////var intersect = szamok2.Intersect(szamok1).Count();
             ///
-            KenoTicketChecker kenoTicketChecker= new KenoTicketChecker(new DateTime(2022,02,03), new DateTime(2022,05,01));
+            
+            int[] numbers = new int[] {2,6,10,22,32,37,43} ;
 
-            int[] numbers = new int[] { 3, 6, 8, 21, 22,26,27} ;
+            KenoTicketChecker kenoTicketChecker= new KenoTicketChecker(ISorsolasok);
 
-            var isWinner = kenoTicketChecker.IsAWinnerTicket(numbers);
+            var isWinner = kenoTicketChecker.IsAWinnerTicket(numbers, new DateTime(2016, 4, 2), new DateTime(2023, 4, 7)));
 
-            Console.WriteLine("Is winner?: " + isWinner); 
+            //var numbersOfBelow30 = kenoTicketChecker.HalfOfItBelow30();
+
+            Console.WriteLine("Is winner?: " + isWinner);
+           // Console.WriteLine("Numbers of tickets that half of it below 30: " + numbersOfBelow30);
 
             Console.ReadLine();
         }  
